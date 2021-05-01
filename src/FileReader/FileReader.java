@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashSet;
+
+import Tas.Element;
 
 public class FileReader {
 	private String filePath;
@@ -49,45 +50,28 @@ public class FileReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Before=" + chars + "\n" + chars.size());
+		Element[] res = new Element[chars.size()];
+		Tas.Tas.triParTas(chars, res);
+		System.out.println("After=" + chars + "\n" + chars.size());
+		this.display(res);
+		
 	}
 
-
-	@Override
-	public String toString() {
-		return this.getClass() + " " + this.filePath;
+	public void display(Element[] res) {
+		int pos = 1;
+		for(int i = 0; i < res.length; i++) {
+			if((i+1) == pos) {
+				pos *= 2;
+				System.out.println();
+			}
+			System.out.print(res[i].getFreq() + "; ");
+		}
 	}
 	
-	public class Element{
-		private int freq;
-		private char element;
-		
-		public Element(char element) {
-			this.element = element;
-			this.freq = 1;
-		}
-		
-		public void increment() {
-			this.freq++;
-		}
-		
-		public char getElement(){
-			return this.element;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if(!(obj instanceof Element)) return false;
-			Element e = (Element)obj;
-			if(this.element == e.getElement()) return true;
-			return false;
-			
-		}
-		@Override
-		public String toString() {
-			return "'" + this.element + "': " + this.freq;
-		}
-		
-		
+	@Override
+	public String toString() {	
+		return this.getClass() + " " + this.filePath;
 	}
 
 }
