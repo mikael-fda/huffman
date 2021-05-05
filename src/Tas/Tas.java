@@ -66,7 +66,6 @@ public class Tas {
 		
 		for(int i = 0; i < size; i++) {
 			val = tas.getMinTas();
-//			l.add(i, val);
 			res[i] = val;
 			tas.removeMin();
 		}
