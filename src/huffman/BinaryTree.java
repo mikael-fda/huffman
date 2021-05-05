@@ -1,8 +1,10 @@
 package huffman;
 
+
 import java.util.Vector;
 
 import FileReader.FileReader;
+import FileReader.FileWritterEncode;
 import Tas.Element;
 
 public class BinaryTree {
@@ -11,7 +13,7 @@ public class BinaryTree {
 	
 	private int freq;
 	private char car;
-	private String bytes;
+	private byte[] bytes;
 	
 	public BinaryTree(int a, char car) {
 
@@ -29,12 +31,20 @@ public class BinaryTree {
 		this.car = car;
 	}
 	
+	public boolean isLeaf() {
+		return this.left == null && this.right == null;
+	}
+	
+	public BinaryTree getLeft() { return this.left; }
+	public BinaryTree getRight() { return this.right; }
+	
+	
 	public static BinaryTree huffman(Element[] res) {
 		int size = res.length;
 		Vector<BinaryTree> tree = new Vector<BinaryTree>();
-		for(Element e : res)
+		for(Element e : res) {
 			tree.add(new BinaryTree(e.getFreq(), e.getElement()));
-
+		}
 		while(tree.size() > 1) {
 			var x = BinaryTree.min(tree);
 			tree.remove(x);
@@ -51,24 +61,24 @@ public class BinaryTree {
 			
 			tree.add(z);
 		}
+		tree.get(0).applyBytes();
 		return tree.get(0);
 		
 	}
 	
 	private static BinaryTree min(Vector<BinaryTree> vec) {
 		BinaryTree min = vec.get(0);
-		System.out.println(vec);
 		for(BinaryTree b : vec) {
 			if(b.inferiorTo(min)) {
 				min = b;
 			}
 		}
-		System.out.println("Min is = " + min.onlyLeaf() + "\n");
 		return min;
 	}
 	
 	public int getFreq() { return this.freq; }	
 	public char getChar() { return this.car; }
+	public byte[] getBytes() { return this.bytes; }
 	
 	public boolean inferiorTo(BinaryTree b) {		
 		if(this.freq < b.getFreq()) return true;
@@ -77,11 +87,27 @@ public class BinaryTree {
 		return this.getChar() < b.getChar();
 	}
 	
+	public void applyBytes() {
+		byte[] bits = new byte[0];
+		this.applyBytes(bits);
+	}
 	
-	public void applyBytes(String b) {
-		this.bytes = b;
-		if(left != null) this.left.applyBytes( b + "0");
-		if(right != null) this.right.applyBytes( b + "1");
+	private void applyBytes(byte[] bits) {
+		this.bytes = bits;
+		int size = bits.length + 1;
+		
+		byte[] enc = new byte[size];
+		for(int i = 0; i < size - 1; i++) {
+			enc[i] = bits[i];
+		}
+		if(left != null) {
+			enc[size - 1] = 0b0;
+			this.left.applyBytes(enc);
+		}
+		if(right != null) {
+			enc[size - 1] = 0b1;
+			this.right.applyBytes(enc);
+		}
 		
 	}
 	
@@ -105,7 +131,15 @@ public class BinaryTree {
 	
 	public String onlyLeaf() {
 		if(left == null && right == null) {
-			return "(" + this.car + "," + this.freq + "," + this.bytes + ")";
+
+			if(bytes != null) {
+				String s = "";
+				for(byte b : bytes) {
+					s += b;
+				}
+				return "(" + this.car + "," + this.freq + "," + s + ")\n";
+			}
+			return "(" + this.car + "," + this.freq + "," + this.bytes + ")\n";
 		}
 		StringBuilder s = new StringBuilder();
 		if(this.left != null)
@@ -139,7 +173,12 @@ public class BinaryTree {
 		Element[] res = fr.readFile();
 		BinaryTree a = BinaryTree.huffman(res);
 		System.out.println("\n\n");
-		a.applyBytes("");
-		System.out.println(a.printer());
+		
+		a.applyBytes();
+//		System.out.println(a.printer());
+
+		System.out.println("\n\n");
+		System.out.println(a.onlyLeaf());
+		FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), a, fr);
 	}
 }
