@@ -1,6 +1,5 @@
 package huffman;
 
-import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,12 +19,11 @@ public class Main {
 		}
 
 		FileReader fr;
-		JOptionPane jop = new JOptionPane();
 		JFileChooser path = new JFileChooser();
 		String[] choices = {"Quitter", "Décoder un texte", "Coder un texte"};
 
 
-		int res = jop.showOptionDialog(null,
+		int res = JOptionPane.showOptionDialog(null,
 				"Que voulez-vous faire ?", 
 				"Algorithme de Huffman", 
 				JOptionPane.YES_NO_CANCEL_OPTION, 
