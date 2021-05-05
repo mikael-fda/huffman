@@ -25,6 +25,7 @@ public class FileReader {
 	public void readFile(){
 		this.chars = new ArrayList<Element>();
 		this.fileContent = new StringBuilder();
+		int nb_chars = 0;
 		BufferedReader lnr;
 		try {
 			lnr = new BufferedReader(
@@ -35,6 +36,7 @@ public class FileReader {
 			while( (tempLine = lnr.readLine()) != null ) {
 				tempLine += '\n';
 				for(char c : tempLine.toCharArray()) {
+					nb_chars++;
 					Element e = new Element(c);
 					if(this.chars.contains(e)) {
 						this.chars.get(chars.indexOf(e)).increment();
@@ -50,11 +52,18 @@ public class FileReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Before=" + chars + "\n" + chars.size());
+		
+		
+//		System.out.println("Before=" + chars + "\n" + chars.size());
 		Element[] res = new Element[chars.size()];
+		
+		
 		Tas.Tas.triParTas(chars, res);
-		System.out.println("After=" + chars + "\n" + chars.size());
+		
+//		System.out.println("After=" + chars + "\n" + chars.size());
 		this.display(res);
+		System.out.println("" + this.filePath);
+		System.out.println("Nb chars=" + nb_chars);
 		
 	}
 
@@ -65,8 +74,9 @@ public class FileReader {
 				pos *= 2;
 				System.out.println();
 			}
-			System.out.print(res[i].getFreq() + "; ");
+			System.out.print(res[i] + "; ");
 		}
+		System.out.println();
 	}
 	
 	@Override
