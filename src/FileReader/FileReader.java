@@ -22,7 +22,7 @@ public class FileReader {
 		this.file = new File(filePath);
 	}
 	
-	public void readFile(){
+	public Element[] readFile(){
 		this.chars = new ArrayList<Element>();
 		this.fileContent = new StringBuilder();
 		int nb_chars = 0;
@@ -34,7 +34,7 @@ public class FileReader {
 			
 			String tempLine;
 			while( (tempLine = lnr.readLine()) != null ) {
-				tempLine += '\n';
+//				tempLine += '\n';
 				for(char c : tempLine.toCharArray()) {
 					nb_chars++;
 					Element e = new Element(c);
@@ -64,6 +64,7 @@ public class FileReader {
 		this.display(res);
 		System.out.println("" + this.filePath);
 		System.out.println("Nb chars=" + nb_chars);
+		return res;
 		
 	}
 

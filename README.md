@@ -4,7 +4,7 @@
 - [x] Calculer la fréquence de chaque element
 - [x] Tri par tas des fréquences
 - [x] Interface pour choisir le fichier
-- [ ] Construire l'arbre de huffman
+- [x] Construire l'arbre de huffman
 - [ ] Afficher le taux de compression 
 - [ ] Stocker l'arbre de huffman dans le fichier de sortie 
 - [ ] Ecrire le ficher compresser
