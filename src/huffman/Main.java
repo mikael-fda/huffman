@@ -7,6 +7,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import FileReader.FileReader;
+import FileReader.FileWritterEncode;
+import Tas.Element;
 
 public class Main {
 	public static void main(String[] args){		
@@ -32,7 +34,6 @@ public class Main {
 				choices, 
 				choices[0]
 			);
-		System.out.println("Resultat=" + res);
 		
 		if(res == 2) {
 			path.setDialogTitle("Choisis un fichier à coder");
@@ -41,7 +42,12 @@ public class Main {
 				System.exit(1);
 			}
 			fr = new FileReader(path.getSelectedFile().getAbsolutePath());
-			fr.readFile();
+			
+			Element[] freq = fr.readFile();
+			BinaryTree huffman = BinaryTree.huffman(freq);
+			FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), huffman, fr);
+			
+			
 		}
 		else if(res == 1) {
 			path.setDialogTitle("Choisis un fichier à décoder");
