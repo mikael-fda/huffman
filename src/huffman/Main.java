@@ -26,16 +26,17 @@ public class Main {
 
 
 		int res = jop.showOptionDialog(null,
-			"Que voulez-vous faire ?", 
-			"Algorithme de Huffman", 
-			JOptionPane.YES_NO_CANCEL_OPTION, 
-			JOptionPane.QUESTION_MESSAGE, 
-			null, 
-			choices, 
-			choices[2]);
-
+				"Que voulez-vous faire ?", 
+				"Algorithme de Huffman", 
+				JOptionPane.YES_NO_CANCEL_OPTION, 
+				JOptionPane.QUESTION_MESSAGE, 
+				null, 
+				choices, 
+				choices[0]
+			);
+		System.out.println("Resultat=" + res);
 		
-		if(res == 0) {
+		if(res == 2) {
 			path.setDialogTitle("Choisis un fichier à coder");
 			
 			if(path.showOpenDialog(null) != JFileChooser.APPROVE_OPTION ) {
