@@ -80,6 +80,14 @@ public class FileReader {
 		System.out.println();
 	}
 	
+	public String getFilePath() {
+		return this.filePath;
+	}
+	
+	public StringBuilder getFileContent() {
+		return this.fileContent;
+	}
+	
 	@Override
 	public String toString() {	
 		return this.getClass() + " " + this.filePath;
