@@ -1,4 +1,4 @@
-package FileReader;
+package FileProcessor;
 
 public interface HuffmanFile {
 	final String ENC_SEPARATOR = "\0";

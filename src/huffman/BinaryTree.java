@@ -3,9 +3,10 @@ package huffman;
 
 import java.util.Vector;
 
-import FileReader.FileReaderDecode;
-import FileReader.FileReaderEncode;
-import FileReader.FileWritterEncode;
+import FileProcessor.FileReaderDecode;
+import FileProcessor.FileReaderEncode;
+import FileProcessor.FileWritterDecode;
+import FileProcessor.FileWritterEncode;
 import Tas.Element;
 
 public class BinaryTree {
@@ -167,8 +168,10 @@ public class BinaryTree {
 		FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), a, fr);
 	
 	
-		FileReaderDecode fre = new FileReaderDecode("fichier4.txt.huf");
-		fre.readFile();
-	
+		FileReaderDecode frd = new FileReaderDecode("fichier4.txt.huf");
+		frd.readFile();
+		
+		FileWritterDecode fwd = new FileWritterDecode(frd);
+		fwd.writeFile();
 	}
 }

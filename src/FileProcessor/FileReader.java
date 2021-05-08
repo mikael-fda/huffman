@@ -1,8 +1,6 @@
-package FileReader;
+package FileProcessor;
 
 import java.io.File;
-
-import Tas.Element;
 
 public class FileReader {
 	protected String filePath;
