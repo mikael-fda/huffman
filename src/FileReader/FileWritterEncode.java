@@ -1,12 +1,8 @@
 package FileReader;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,19 +10,15 @@ import huffman.BinaryTree;
 
 
 
-public class FileWritterEncode extends FileWritter{
-	private static final String EXTENSION = ".huf";
-	private static final String  CHAR_SEPARATOR = "\0\0";
-	private static final String  ENC_SEPARATOR = "\0";
-	private static final String  END_LINE = "\n";
-	
-	
-	private FileReader fr;
+public class FileWritterEncode extends FileWritter implements HuffmanFile{
+	private final String EXTENSION = ".huf";
+
+	private FileReaderEncode fr;
 	private BinaryTree huffman;
 	private Map<Character, BinaryTree> nodes;
 	
-	public FileWritterEncode(String path, BinaryTree huffman, FileReader fr) {
-		super(path + EXTENSION);
+	public FileWritterEncode(String path, BinaryTree huffman, FileReaderEncode fr) {
+		super(path + ".huf");
 		this.huffman = huffman;
 		this.fr = fr;
 		this.nodes = new HashMap<Character, BinaryTree>();
@@ -54,11 +46,11 @@ public class FileWritterEncode extends FileWritter{
 			// écrit les fréquences
 			for(BinaryTree n : this.nodes.values()) {
 				baos.write(n.getChar());
-				baos.write(ENC_SEPARATOR.getBytes());
+				baos.write(this.ENC_SEPARATOR.getBytes());
 				baos.write(n.getBytes().getBytes());
-				baos.write(CHAR_SEPARATOR.getBytes());
+				baos.write(this.CHAR_SEPARATOR.getBytes());
 			}
-			baos.write(END_LINE.getBytes());
+			baos.write(this.END_LINE.getBytes());
 			
 			// masque binaire
 			byte zeroM = 0B0, oneM = 0B1;
