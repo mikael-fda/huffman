@@ -13,7 +13,7 @@ public class BinaryTree {
 	
 	private int freq;
 	private char car;
-	private byte[] bytes;
+	private String bytes;
 	
 	public BinaryTree(int a, char car) {
 
@@ -78,7 +78,7 @@ public class BinaryTree {
 	
 	public int getFreq() { return this.freq; }	
 	public char getChar() { return this.car; }
-	public byte[] getBytes() { return this.bytes; }
+	public String getBytes() { return this.bytes; }
 	
 	public boolean inferiorTo(BinaryTree b) {		
 		if(this.freq < b.getFreq()) return true;
@@ -88,26 +88,13 @@ public class BinaryTree {
 	}
 	
 	public void applyBytes() {
-		byte[] bits = new byte[0];
-		this.applyBytes(bits);
+		this.applyBytes("");
 	}
 	
-	private void applyBytes(byte[] bits) {
+	private void applyBytes(String bits) {
 		this.bytes = bits;
-		int size = bits.length + 1;
-		
-		byte[] enc = new byte[size];
-		for(int i = 0; i < size - 1; i++) {
-			enc[i] = bits[i];
-		}
-		if(left != null) {
-			enc[size - 1] = 0b0;
-			this.left.applyBytes(enc);
-		}
-		if(right != null) {
-			enc[size - 1] = 0b1;
-			this.right.applyBytes(enc);
-		}
+		if(left != null)  {  this.left.applyBytes(bits + "0"); }
+		if(right != null) { this.right.applyBytes(bits + "1"); }
 		
 	}
 	
@@ -134,9 +121,7 @@ public class BinaryTree {
 
 			if(bytes != null) {
 				String s = "";
-				for(byte b : bytes) {
-					s += b;
-				}
+				s = this.bytes;
 				return "(" + this.car + "," + this.freq + "," + s + ")\n";
 			}
 			return "(" + this.car + "," + this.freq + "," + this.bytes + ")\n";
@@ -169,13 +154,12 @@ public class BinaryTree {
     }
 	
 	public static void main(String[] args) {
-		FileReader fr = new FileReader("hufman.txt");
+		FileReader fr = new FileReader("fichier4.txt");
 		Element[] res = fr.readFile();
 		BinaryTree a = BinaryTree.huffman(res);
 		System.out.println("\n\n");
 		
 		a.applyBytes();
-//		System.out.println(a.printer());
 
 		System.out.println("\n\n");
 		System.out.println(a.onlyLeaf());
