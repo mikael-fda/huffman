@@ -1,14 +1,19 @@
 package huffman;
 
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
 
-import FileReader.FileReader;
-import FileReader.FileReaderEncode;
-import FileReader.FileWritterEncode;
+import FileProcessor.FileReader;
+import FileProcessor.FileReaderDecode;
+import FileProcessor.FileReaderEncode;
+import FileProcessor.FileWritterDecode;
+import FileProcessor.FileWritterEncode;
 import Tas.Element;
 
 public class Main {
@@ -42,20 +47,43 @@ public class Main {
 			if(path.showOpenDialog(null) != JFileChooser.APPROVE_OPTION ) {
 				System.exit(1);
 			}
-			
+			// Encoding 
 			FileReaderEncode fre = new FileReaderEncode(path.getSelectedFile().getAbsolutePath());
 			Element[] freq = fre.getEncodings();
+			// Arbre de Huffman
 			BinaryTree huffman = BinaryTree.huffman(freq);
 			
+			// Write file
 			FileWritterEncode fwe = new FileWritterEncode(fre.getFilePath(), huffman, fre);
 			
 			
 		}
 		else if(res == 1) {
 			path.setDialogTitle("Choisis un fichier à décoder");
+			path.addChoosableFileFilter(new FileFilter() {
+				
+				@Override
+				public String getDescription() {
+					// TODO Auto-generated method stub
+					return "huffman encoded (.huf)";
+				}
+				
+				@Override
+				public boolean accept(File f) {
+					if(f.isDirectory()) return true;
+					return f.getName().endsWith(".huf");
+				}
+			});
 			if(path.showOpenDialog(null) != JFileChooser.APPROVE_OPTION ) {
 				System.exit(1);
 			}
+			// Read file encoded
+			FileReaderDecode frd = new FileReaderDecode(path.getSelectedFile().getAbsolutePath());
+			frd.readFile();
+			
+			// Write file decoded
+			FileWritterDecode fwd = new FileWritterDecode(frd);
+			fwd.writeFile();
 
 		}
 

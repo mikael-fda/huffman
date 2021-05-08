@@ -6,8 +6,8 @@
 - [x] Interface pour choisir le fichier
 - [x] Construire l'arbre de huffman
 - [ ] Afficher le taux de compression 
-- [ ] Stocker l'arbre de huffman dans le fichier de sortie 
-- [ ] Ecrire le ficher compresser
-- [ ] Lire l'arbre de huffman du fichier compresser
-- [ ] Decompresser le fichier
+- [x] Stocker l'arbre de huffman dans le fichier de sortie 
+- [x] Ecrire le ficher compresser
+- [x] Lire l'arbre de huffman du fichier compresser
+- [x] Decompresser le fichier
 - [ ] Faire le rapport

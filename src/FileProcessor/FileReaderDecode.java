@@ -1,4 +1,4 @@
-package FileReader;
+package FileProcessor;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,11 +8,13 @@ import java.util.Map;
 
 public class FileReaderDecode extends FileReader implements HuffmanFile{
 	Map<String, Character> translation;
+	StringBuilder content;
 	
 	
 	public FileReaderDecode(String filePath) {
 		super(filePath);
 		this.translation = new HashMap<String, Character>();
+		this.content = new StringBuilder();
 	}
 	
 	public void readFile() {
@@ -55,33 +57,52 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 			int id = 0;
 			char bit;
 			String curr = "";
-			while((bit = (char) in.read()) != -1) {
+
+			System.out.println("BEGIN ONE");
+			while( (bit = (char) in.read()) != -1) {
 				curr = Integer.toBinaryString(bit);
+				if(curr.equals("1111111111111111"))
+					break;
 				while(curr.length() < 8) {
 					curr = "0" + curr;
 				}
 				sb.append(curr);
-				if(id == 50) break;
-					id++;
+//				if(id == 50) break;
+//					id++;
 
-				System.out.println(curr + " -> " + this.translation.get(curr));
+//				System.out.println(curr + " -> " + this.translation.get(curr));
+				if(id % 1000 == 0)
+					System.out.println("ONE->" + curr + " : " + bit + " --> " + id);
+				id++;
 			}
-			System.out.println(this.translation);
+//			System.out.println(this.translation);
+			System.out.println("END ONE");
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		int deb =0, fin = 0;
+		int id = 0;
 		String bytes = "";
+
+		System.out.println("BEGIN TWO");
 		for(char c : sb.toString().toCharArray()) {
 			bytes += c;
 			Character res = this.translation.get(bytes);
 			if(res != null) {
-				System.out.print(res);
+				this.content.append(res);
+//				System.out.print(res);
 				bytes = "";
 			}
+			if(id % 1000 == 0)
+				System.out.println("TWO->" + bytes + " <--> " + res);
+			id++;
 		}
+		System.out.println("END TWO");
+	}
+	
+	public StringBuilder getContent() {
+		return this.content;
 	}
 	
 	public Map<String, Character> getTranslations(){
