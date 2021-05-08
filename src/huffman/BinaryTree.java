@@ -3,7 +3,8 @@ package huffman;
 
 import java.util.Vector;
 
-import FileReader.FileReader;
+import FileReader.FileReaderDecode;
+import FileReader.FileReaderEncode;
 import FileReader.FileWritterEncode;
 import Tas.Element;
 
@@ -48,7 +49,7 @@ public class BinaryTree {
 		while(tree.size() > 1) {
 			var x = BinaryTree.min(tree);
 			tree.remove(x);
-			var y = BinaryTree.min(tree);
+			var y = BinaryTree.min(tree); 
 			tree.remove(y);
 			
 			BinaryTree z;
@@ -154,8 +155,8 @@ public class BinaryTree {
     }
 	
 	public static void main(String[] args) {
-		FileReader fr = new FileReader("fichier4.txt");
-		Element[] res = fr.readFile();
+		FileReaderEncode fr = new FileReaderEncode("fichier4.txt");
+		Element[] res = fr.getEncodings();
 		BinaryTree a = BinaryTree.huffman(res);
 		System.out.println("\n\n");
 		
@@ -164,5 +165,10 @@ public class BinaryTree {
 		System.out.println("\n\n");
 		System.out.println(a.onlyLeaf());
 		FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), a, fr);
+	
+	
+		FileReaderDecode fre = new FileReaderDecode("fichier4.txt.huf");
+		fre.readFile();
+	
 	}
 }

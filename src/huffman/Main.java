@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import FileReader.FileReader;
+import FileReader.FileReaderEncode;
 import FileReader.FileWritterEncode;
 import Tas.Element;
 
@@ -41,11 +42,12 @@ public class Main {
 			if(path.showOpenDialog(null) != JFileChooser.APPROVE_OPTION ) {
 				System.exit(1);
 			}
-			fr = new FileReader(path.getSelectedFile().getAbsolutePath());
 			
-			Element[] freq = fr.readFile();
+			FileReaderEncode fre = new FileReaderEncode(path.getSelectedFile().getAbsolutePath());
+			Element[] freq = fre.getEncodings();
 			BinaryTree huffman = BinaryTree.huffman(freq);
-			FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), huffman, fr);
+			
+			FileWritterEncode fwe = new FileWritterEncode(fre.getFilePath(), huffman, fre);
 			
 			
 		}
