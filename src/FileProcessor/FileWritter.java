@@ -19,4 +19,13 @@ public class FileWritter implements HuffmanFile{
 		}
 	}
 	
+	public FileWritter(String path, String prefix, String remove) {
+		File toRead = new File(path);
+		String dirname = toRead.getParent();
+		String filename = prefix + toRead.getName();
+		filename = filename.replace(remove, "");
+		this.file = new File(dirname, filename);
+		
+	}
+	
 }

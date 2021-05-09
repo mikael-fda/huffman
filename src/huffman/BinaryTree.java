@@ -156,7 +156,7 @@ public class BinaryTree {
     }
 	
 	public static void main(String[] args) {
-		FileReaderEncode fr = new FileReaderEncode("fichier4.txt");
+		FileReaderEncode fr = new FileReaderEncode("fichier02.txt");
 		Element[] res = fr.getEncodings();
 		BinaryTree a = BinaryTree.huffman(res);
 		System.out.println("\n\n");
@@ -168,7 +168,7 @@ public class BinaryTree {
 		FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), a, fr);
 	
 	
-		FileReaderDecode frd = new FileReaderDecode("fichier4.txt.huf");
+		FileReaderDecode frd = new FileReaderDecode("fichier02.txt.huf");
 		frd.readFile();
 		
 		FileWritterDecode fwd = new FileWritterDecode(frd);

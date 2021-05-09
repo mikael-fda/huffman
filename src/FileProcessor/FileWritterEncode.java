@@ -11,14 +11,12 @@ import huffman.BinaryTree;
 
 
 public class FileWritterEncode extends FileWritter implements HuffmanFile{
-	private final String EXTENSION = ".huf";
-
 	private FileReaderEncode fr;
 	private BinaryTree huffman;
 	private Map<Character, BinaryTree> nodes;
 	
 	public FileWritterEncode(String path, BinaryTree huffman, FileReaderEncode fr) {
-		super(path + ".huf");
+		super(path + ENC_EXTENSION);
 		this.huffman = huffman;
 		this.fr = fr;
 		this.nodes = new HashMap<Character, BinaryTree>();

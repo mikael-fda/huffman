@@ -4,12 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileWritterDecode extends FileWritter{
-	final static String PREFIX = "dec_";
+public class FileWritterDecode extends FileWritter implements HuffmanFile{
 	FileReaderDecode input;
 	
 	public FileWritterDecode(FileReaderDecode frd) {
-		super(frd.getFilePath() + PREFIX);
+		super(frd.getFilePath(), DEC_PREFIX, ENC_EXTENSION);
 		this.input = frd;
 	
 	}
