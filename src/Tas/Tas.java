@@ -98,7 +98,6 @@ public class Tas {
 		for(int i = 0; i < fqr -1 ; i++) 
 			e.increment();
 		this.insert(e);
-		System.out.println(this + "\n");
 		
 	}
 	
@@ -121,11 +120,6 @@ public class Tas {
 		tas.addEle('n', 1);
 		tas.removeMin();
 		System.out.println(tas);
-		
-		
-		
-		
-		
 	}
 	
 }

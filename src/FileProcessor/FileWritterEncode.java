@@ -22,7 +22,6 @@ public class FileWritterEncode extends FileWritter implements HuffmanFile{
 		this.nodes = new HashMap<Character, BinaryTree>();
 		
 		this.fetchValues(this.nodes, this.huffman);
-		System.out.println("Nodes=" + nodes);
 		this.writeEncoding();
 	}
 	
@@ -70,7 +69,6 @@ public class FileWritterEncode extends FileWritter implements HuffmanFile{
 					}
 
 					baos.write(octet);
-//					System.out.println(bits +"\n" + bits.substring(0, nb) + "-" + bits.substring(nb));
 					bits = bits.substring(nb);
 				}
 			}

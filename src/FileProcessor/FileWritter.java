@@ -13,7 +13,6 @@ public class FileWritter implements HuffmanFile{
 
 		try {
 			this.file.createNewFile();
-			System.out.println(this.file.getAbsolutePath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
