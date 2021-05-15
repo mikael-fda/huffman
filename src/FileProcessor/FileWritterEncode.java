@@ -23,8 +23,20 @@ public class FileWritterEncode extends FileWritter implements HuffmanFile{
 		
 		this.fetchValues(this.nodes, this.huffman);
 		this.writeEncoding();
+		this.fileCompression();
 	}
 	
+	private void fileCompression(){
+		double txt = this.fr.fileSize();
+		double enc = this.file.length();
+
+		double compression = 100.0 - (enc / txt) * 100.0;
+
+		System.out.println("Fichier  d'entrée:\t" + txt + " octets");
+		System.out.println("Fichier de sortie:\t" + enc + " octets");
+		System.out.println("Taux de compression:\t" + String.format("%.2f", compression) + "%");
+	}
+
 	private void fetchValues(Map<Character, BinaryTree> nodes, BinaryTree node) {
 		if(node.isLeaf()) {
 			nodes.put(node.getChar(), node);

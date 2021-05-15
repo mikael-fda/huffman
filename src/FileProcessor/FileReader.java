@@ -15,6 +15,10 @@ public class FileReader {
 		return this.filePath;
 	}
 
+	public long fileSize(){
+		return this.file.length();
+	}
+
 	@Override
 	public String toString() {	
 		return this.getClass() + " " + this.filePath;
