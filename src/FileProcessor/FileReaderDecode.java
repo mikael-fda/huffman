@@ -49,7 +49,6 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 					curr = "";
 				}
 			}
-			System.out.println(this.translation);
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
