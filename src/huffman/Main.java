@@ -55,7 +55,7 @@ public class Main {
 				fwe.writeEncoding();
 				fwe.fileCompression();
 				
-				
+				System.out.println();
 			}
 			// case decoding
 			else if(res == 1) {
