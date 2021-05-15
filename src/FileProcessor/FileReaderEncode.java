@@ -22,14 +22,12 @@ public class FileReaderEncode extends FileReader{
 	public Element[] getEncodings() {
 		this.readFile();
 		Element[] result = this.sortByTas();
-		return result;
-		
+		return result;	
 	}
 	
 	public void readFile(){
 		this.chars = new ArrayList<Element>();
 		this.fileContent = new StringBuilder(); 
-		int nb_chars = 0;
 		BufferedReader lnr;
 		try {
 			lnr = new BufferedReader(
@@ -39,9 +37,10 @@ public class FileReaderEncode extends FileReader{
 			String tempLine;
 			Element cr = new Element('\n');
 			this.chars.add(cr);
+
 			while( (tempLine = lnr.readLine()) != null ) {
+				// for each character, we increment it or we add it
 				for(char c : tempLine.toCharArray()) {
-					nb_chars++;
 					Element e = new Element(c);
 					if(this.chars.contains(e)) {
 						this.chars.get(chars.indexOf(e)).increment();
@@ -66,7 +65,11 @@ public class FileReaderEncode extends FileReader{
 		Tas.Tas.triParTas(chars, res);
 		return res;
 	}
-	
+
+	public StringBuilder getFileContent() {
+		return this.fileContent;
+	}
+
 	public void display(Element[] res) {
 		int pos = 1;
 		for(int i = 0; i < res.length; i++) {
@@ -77,9 +80,5 @@ public class FileReaderEncode extends FileReader{
 			System.out.print(res[i] + "; ");
 		}
 		System.out.println();
-	}
-
-	public StringBuilder getFileContent() {
-		return this.fileContent;
 	}
 }

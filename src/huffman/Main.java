@@ -1,15 +1,11 @@
 package huffman;
 
 
-import java.io.File;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.filechooser.FileFilter;
 
-import FileProcessor.FileReader;
 import FileProcessor.FileReaderDecode;
 import FileProcessor.FileReaderEncode;
 import FileProcessor.FileWritterDecode;
@@ -26,7 +22,6 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		FileReader fr;
 		JFileChooser path = new JFileChooser();
 		String[] choices = {"Quitter", "Décoder un texte", "Coder un texte"};
 
@@ -42,6 +37,7 @@ public class Main {
 				choices[0]
 			);
 
+			// case encoding
 			if(res == 2) {
 				path.setDialogTitle("Choisis un fichier à coder");
 				
@@ -56,9 +52,12 @@ public class Main {
 				
 				// Write file
 				FileWritterEncode fwe = new FileWritterEncode(fre.getFilePath(), huffman, fre);
+				fwe.writeEncoding();
+				fwe.fileCompression();
 				
 				
 			}
+			// case decoding
 			else if(res == 1) {
 				path.setDialogTitle("Choisis un fichier à décoder");
 	
@@ -74,6 +73,7 @@ public class Main {
 				fwd.writeFile();
 
 			}
+			// case exiting
 			else if(res == 0 || res == -1){
 				System.exit(0);
 			}

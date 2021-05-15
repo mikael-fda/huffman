@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileWritterDecode extends FileWritter implements HuffmanFile{
+public class FileWritterDecode extends FileWritter{
 	FileReaderDecode input;
 	
 	public FileWritterDecode(FileReaderDecode frd) {

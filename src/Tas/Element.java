@@ -10,7 +10,7 @@ public class Element{
 		}
 		
 		public Element() {
-			this.element = '_';
+			this.element = '\0';
 			this.freq = Integer.MAX_VALUE;
 		}
 		

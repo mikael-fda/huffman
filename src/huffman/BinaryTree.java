@@ -3,10 +3,6 @@ package huffman;
 
 import java.util.Vector;
 
-import FileProcessor.FileReaderDecode;
-import FileProcessor.FileReaderEncode;
-import FileProcessor.FileWritterDecode;
-import FileProcessor.FileWritterEncode;
 import Tas.Element;
 
 public class BinaryTree {
@@ -18,14 +14,13 @@ public class BinaryTree {
 	private String bytes;
 	
 	public BinaryTree(int a, char car) {
-
 		this(a, null, null, car);
 	}
 	
 	public BinaryTree(int a, BinaryTree left, BinaryTree right) {
-
 		this(a, left, right, '\0');
 	}
+
 	public BinaryTree(int a, BinaryTree left, BinaryTree right, char car) {
 		this.freq = a;
 		this.left = left;
@@ -36,17 +31,20 @@ public class BinaryTree {
 	public boolean isLeaf() {
 		return this.left == null && this.right == null;
 	}
+
 	
-	public BinaryTree getLeft() { return this.left; }
-	public BinaryTree getRight() { return this.right; }
-	
-	
+	/**
+	 * http://cedric.cnam.fr/~soutile/SDD/SDD_Cours3bis_Arbres_De_Huffman.pdf
+	 * @param res Element[] : Represent chararecter and their frequency
+	 * @return
+	 */
 	public static BinaryTree huffman(Element[] res) {
-		int size = res.length;
+		// init vector of BinaryTree coresponding to my characters
 		Vector<BinaryTree> tree = new Vector<BinaryTree>();
 		for(Element e : res) {
 			tree.add(new BinaryTree(e.getFreq(), e.getElement()));
 		}
+
 		while(tree.size() > 1) {
 			var x = BinaryTree.min(tree);
 			tree.remove(x);
@@ -63,11 +61,18 @@ public class BinaryTree {
 			
 			tree.add(z);
 		}
+		// write binary value of each element 
 		tree.get(0).applyBytes();
+		// return the last element of the vector
 		return tree.get(0);
 		
 	}
 	
+	/**
+	 * Return the minimum value of the tree according to his frequency
+	 * @param vec Vector<BinaryTree>
+	 * @return BinaryTree
+	 */
 	private static BinaryTree min(Vector<BinaryTree> vec) {
 		BinaryTree min = vec.get(0);
 		for(BinaryTree b : vec) {
@@ -77,11 +82,12 @@ public class BinaryTree {
 		}
 		return min;
 	}
-	
-	public int getFreq() { return this.freq; }	
-	public char getChar() { return this.car; }
-	public String getBytes() { return this.bytes; }
-	
+
+	/**
+	 * Compare two BinaryTree using their frequency
+	 * @param b BinaryTree
+	 * @return boolean
+	 */
 	public boolean inferiorTo(BinaryTree b) {		
 		if(this.freq < b.getFreq()) return true;
 		if(this.freq > b.getFreq()) return false;
@@ -89,17 +95,30 @@ public class BinaryTree {
 		return this.getChar() < b.getChar();
 	}
 	
+	/**
+	 * Start applying bits value
+	 */
 	public void applyBytes() {
 		this.applyBytes("");
 	}
-	
+
+	/**
+	 * Recursively applybits value using bits as initiale value
+	 * @param bits String
+	 */
 	private void applyBytes(String bits) {
 		this.bytes = bits;
 		if(left != null)  {  this.left.applyBytes(bits + "0"); }
 		if(right != null) { this.right.applyBytes(bits + "1"); }
-		
 	}
+		
+	public BinaryTree getLeft() { return this.left; }
+	public BinaryTree getRight() { return this.right; }
+	public int getFreq() { return this.freq; }	
+	public char getChar() { return this.car; }
+	public String getBytes() { return this.bytes; }
 	
+
 	@Override
 	public String toString() {
 		if(left == null && right == null) {
@@ -136,6 +155,7 @@ public class BinaryTree {
 		
 		return s.toString();
 	}
+
     public void print(StringBuilder buffer, String prefix, String childrenPrefix) {
         buffer.append(prefix);
         buffer.append("(" + this.car + ", " + this.freq + ")");
@@ -154,24 +174,4 @@ public class BinaryTree {
     	this.print(s, "", "");
     	return s.toString();
     }
-	
-	public static void main(String[] args) {
-		FileReaderEncode fr = new FileReaderEncode("fichier4.txt");
-		Element[] res = fr.getEncodings();
-		BinaryTree a = BinaryTree.huffman(res);
-		System.out.println("\n\n");
-		
-		a.applyBytes();
-
-		System.out.println("\n\n");
-		System.out.println(a.onlyLeaf());
-		FileWritterEncode fwe = new FileWritterEncode(fr.getFilePath(), a, fr);
-	
-	
-		FileReaderDecode frd = new FileReaderDecode("fichier4.txt.huf");
-		frd.readFile();
-		
-		FileWritterDecode fwd = new FileWritterDecode(frd);
-		fwd.writeFile();
-	}
 }

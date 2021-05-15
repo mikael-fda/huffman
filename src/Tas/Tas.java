@@ -1,17 +1,14 @@
 package Tas;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public class Tas {
-	private HashSet<Element> tab2;
 
 	private Element[] tab;
 	private int fin;
 	
 	public Tas(int k) {
-		this.tab2 = new HashSet<Element>();
 		this.tab = new Element[k];
 		this.fin = 0;
 	}
@@ -100,26 +97,4 @@ public class Tas {
 		this.insert(e);
 		
 	}
-	
-	public static void main(String[] args) {
-		Tas tas = new Tas(100);
-
-		tas.addEle('a', 1);
-		tas.addEle('b', 1);
-		tas.addEle('c', 1);
-		tas.addEle('d', 15);
-		tas.addEle('e', 10);
-		tas.addEle('f', 11);
-		tas.addEle('g', 9);
-		tas.addEle('h', 10);
-		tas.addEle('i', 1);
-		tas.addEle('j', 1);
-		tas.addEle('k', 1);
-		tas.addEle('l', 1);
-		tas.addEle('m', 1);
-		tas.addEle('n', 1);
-		tas.removeMin();
-		System.out.println(tas);
-	}
-	
 }

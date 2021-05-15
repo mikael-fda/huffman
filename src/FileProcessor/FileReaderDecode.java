@@ -28,16 +28,21 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 		}
 	}
 	
+	/**
+	 * Read the first line of the file which correspond to the encoding translations
+	 * @param in FileInputStream
+	 */
 	public void readEncoding(FileInputStream in) {
 		try {			
 			char bit;
 			String curr = "";
 			while((bit = (char) in.read()) != -1) {
 				curr += bit;
-				
+				// case end of encoding sections
 				if(curr.contains(END_LINE)) {
 					break;
 				}
+				// case a new char
 				if(curr.contains(CHAR_SEPARATOR)) {
 					String value = curr.replace(ENC_SEPARATOR, "");
 					this.translation.put(value.substring(1), value.charAt(0));
@@ -51,6 +56,10 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 		}
 	}
 	
+	/**
+	 * Read bytes of a file and translate into char
+	 * @param in FileInputStream
+	 */
 	public void readContent(FileInputStream in) {
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -59,9 +68,11 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 
 			while( (bit = (char) in.read()) != -1) {
 				curr = Integer.toBinaryString(bit);
+				// end of file
 				if(curr.equals("1111111111111111"))
 					break;
 				while(curr.length() < 8) {
+					// complete missing 0. eg: 111 -> 00000111
 					curr = "0" + curr;
 				}
 				sb.append(curr);
@@ -70,13 +81,13 @@ public class FileReaderDecode extends FileReader implements HuffmanFile{
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		int id = 0;
-		String bytes = "";
 
+		String bytes = "";
+		Character res;
+		// read bit by bit
 		for(char c : sb.toString().toCharArray()) {
 			bytes += c;
-			Character res = this.translation.get(bytes);
+			res = this.translation.get(bytes);
 			if(res != null) {
 				this.content.append(res);
 				bytes = "";
